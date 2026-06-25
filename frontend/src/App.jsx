@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import "./App.css";
 
-const API = "http://localhost:8000";
+const API = "https://resume-analyzer-api-jl57.onrender.com";
 
 const CAREER_ICONS = {
   "Web Developer": "🌐",
@@ -15,11 +15,11 @@ const CAREER_ICONS = {
 };
 
 export default function App() {
-  const [file, setFile]           = useState(null);
-  const [dragging, setDragging]   = useState(false);
-  const [loading, setLoading]     = useState(false);
-  const [result, setResult]       = useState(null);
-  const [error, setError]         = useState(null);
+  const [file, setFile] = useState(null);
+  const [dragging, setDragging] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   // ── drag-and-drop ──────────────────────────────────────────────────────────
   const onDrop = useCallback((e) => {
@@ -80,7 +80,9 @@ export default function App() {
           <span className="logo-badge">AI</span>
           <div>
             <h1 className="site-title">Resume Analyzer</h1>
-            <p className="site-sub">Career Recommendation & Skill Gap Detection</p>
+            <p className="site-sub">
+              Career Recommendation & Skill Gap Detection
+            </p>
           </div>
         </div>
       </header>
@@ -91,7 +93,10 @@ export default function App() {
           <div className="upload-card">
             <div
               className={`dropzone ${dragging ? "dragging" : ""} ${file ? "has-file" : ""}`}
-              onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setDragging(true);
+              }}
               onDragLeave={() => setDragging(false)}
               onDrop={onDrop}
               onClick={() => document.getElementById("file-input").click()}
@@ -107,7 +112,9 @@ export default function App() {
                 <div className="file-selected">
                   <div className="file-icon">📄</div>
                   <p className="file-name">{file.name}</p>
-                  <p className="file-size">{(file.size / 1024).toFixed(1)} KB</p>
+                  <p className="file-size">
+                    {(file.size / 1024).toFixed(1)} KB
+                  </p>
                 </div>
               ) : (
                 <div className="drop-prompt">
@@ -138,7 +145,12 @@ export default function App() {
             <div className="how-it-works">
               <p className="how-label">How it works</p>
               <div className="steps">
-                {["Upload PDF", "Extract Skills", "ML Prediction", "Skill Gap"].map((s, i) => (
+                {[
+                  "Upload PDF",
+                  "Extract Skills",
+                  "ML Prediction",
+                  "Skill Gap",
+                ].map((s, i) => (
                   <div key={i} className="step">
                     <span className="step-num">{i + 1}</span>
                     <span className="step-text">{s}</span>
@@ -164,7 +176,9 @@ export default function App() {
                     style={{ width: `${result.match_percentage}%` }}
                   />
                 </div>
-                <p className="match-pct">{result.match_percentage}% skill match</p>
+                <p className="match-pct">
+                  {result.match_percentage}% skill match
+                </p>
               </div>
             </div>
 
@@ -174,8 +188,13 @@ export default function App() {
                 <h3 className="section-title">Top Career Predictions</h3>
                 <div className="top-careers">
                   {result.top_careers.map((c, i) => (
-                    <div key={i} className={`career-pill ${i === 0 ? "top" : ""}`}>
-                      <span className="cp-icon">{CAREER_ICONS[c.career] || "🎯"}</span>
+                    <div
+                      key={i}
+                      className={`career-pill ${i === 0 ? "top" : ""}`}
+                    >
+                      <span className="cp-icon">
+                        {CAREER_ICONS[c.career] || "🎯"}
+                      </span>
                       <span className="cp-name">{c.career}</span>
                       <span className="cp-pct">{c.probability}%</span>
                     </div>
@@ -189,11 +208,15 @@ export default function App() {
               <section className="result-section">
                 <h3 className="section-title">
                   <span className="dot green" /> Detected Skills
-                  <span className="count-badge">{result.detected_skills.length}</span>
+                  <span className="count-badge">
+                    {result.detected_skills.length}
+                  </span>
                 </h3>
                 <div className="tag-cloud">
                   {result.detected_skills.map((s) => (
-                    <span key={s} className="tag tag-green">{s}</span>
+                    <span key={s} className="tag tag-green">
+                      {s}
+                    </span>
                   ))}
                 </div>
               </section>
@@ -202,14 +225,18 @@ export default function App() {
               <section className="result-section">
                 <h3 className="section-title">
                   <span className="dot red" /> Skills to Learn
-                  <span className="count-badge warn">{result.missing_skills.length}</span>
+                  <span className="count-badge warn">
+                    {result.missing_skills.length}
+                  </span>
                 </h3>
                 {result.missing_skills.length === 0 ? (
                   <p className="all-good">🎉 You have all required skills!</p>
                 ) : (
                   <div className="tag-cloud">
                     {result.missing_skills.map((s) => (
-                      <span key={s} className="tag tag-red">{s}</span>
+                      <span key={s} className="tag tag-red">
+                        {s}
+                      </span>
                     ))}
                   </div>
                 )}
